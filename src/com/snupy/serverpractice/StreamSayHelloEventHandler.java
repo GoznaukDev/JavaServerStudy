@@ -4,11 +4,16 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.StringTokenizer;
 
-public class StreamUpdateProfileProtocol {
+public class StreamSayHelloEventHandler implements EventHandler {
     // Stream방식으로 데이터를 받아와서 출력
 
-    private static final int DATA_SIZE = 1024;   // 데이터의 맥시멈 사이즈 정의
-    private static final int TOKEN_NUM = 5;     // 데이터 구분자의 개수 정의 (파이프'|'로 구분)
+    private static final int DATA_SIZE = 512;   // 데이터의 맥시멈 사이즈 정의
+    private static final int TOKEN_NUM = 2;     // 데이터 구분자의 개수 정의 (파이프'|'로 구분)
+
+    @Override
+    public String getHandler() {
+        return "0x5001";
+    }
 
     public void handleEvent(InputStream inputStream) {
 
@@ -33,10 +38,7 @@ public class StreamUpdateProfileProtocol {
 
     private void sayHello(String[] params) {
         // 파이프를 기준으로 파싱한 데이터를 출력
-        System.out.println("UpdateProfile -> id: " + params[0] +
-                "               password: " + params[1] +
-                "               name: " + params[2] +
-                "               age: " + params[3] +
-                "               gender: " + params[4]);
+        System.out.println("SayHello -> name: " + params[0] +
+                "\tage: " + params[1]);
     }
 }

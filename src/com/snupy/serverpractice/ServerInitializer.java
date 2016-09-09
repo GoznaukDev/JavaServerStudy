@@ -15,16 +15,11 @@ public class ServerInitializer {
         int port = 5000;
         System.out.println("Server ON: " + port);
 
-        // 서버 소켓을 생성함
-        try{
-            ServerSocket serverSocket = new ServerSocket(port);
+        Reactor reactor = new Reactor(port);
 
-            // Dispatcher에게 ServerSocket을 전달하도록 수정
-            Dispatcher dispatcher = new Dispatcher();
-            dispatcher.dispatch(serverSocket);
+        reactor.registerHandler(new StreamSayHelloEventHandler());
+        reactor.registerHandler(new StreamUpdateProfileEventHandler());
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        reactor.startServer();
     }
 }
