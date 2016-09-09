@@ -1,5 +1,6 @@
 package com.snupy.serverpractice;
 
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -17,18 +18,11 @@ public class ServerInitializer {
         // 서버 소켓을 생성함
         try{
             ServerSocket serverSocket = new ServerSocket(port);
-            Socket connection;
 
+            // Dispatcher에게 ServerSocket을 전달하도록 수정
+            Dispatcher dispatcher = new Dispatcher();
+            dispatcher.dispatch(serverSocket);
 
-            // 서버에 접속된 연결로부터 한 줄을 읽어와 콘솔에 출력함
-            while (true) {
-                connection = serverSocket.accept();
-                InputStreamReader inputStreamReader = new InputStreamReader(connection.getInputStream());
-                BufferedReader bufferedReader  = new BufferedReader(inputStreamReader);
-                String line = bufferedReader.readLine();
-
-                System.out.println("Read: " + line);
-            }
         } catch (IOException e) {
             e.printStackTrace();
         }
